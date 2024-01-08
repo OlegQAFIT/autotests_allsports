@@ -1,12 +1,6 @@
-from telnetlib import EC
-
-from selenium.common import TimeoutException
-from selenium.webdriver.support import expected_conditions as EC
 import allure
 from faker import Faker
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.wait import WebDriverWait
-
 from helpers import BasePage
 from helpers.authorization import LoginPage
 from locators.for_company_page_locators import CompanyPageLocators

@@ -1,6 +1,4 @@
 import allure
-
-from helpers.authorization import LoginPage
 from pages.company import Company
 
 
@@ -71,6 +69,7 @@ def test_disable_fields(driver):
     create_company.drop_registration_type_dropdown()
     create_company.assert_disable_elements()
 
+
 @allure.feature('')
 @allure.severity('')
 @allure.story('')
@@ -107,7 +106,6 @@ def test_create_heck_UNN(driver):
     create_company.fill_fields_vat_number()
     create_company.click_save_company()
     create_company.assert_found_text_after_searching_vat_number()
-
 
 
 @allure.feature('')
@@ -172,7 +170,6 @@ def test_required_fields_check(driver):
     create_company.drop_city_selection()
     create_company.click_save_company()
     create_company.assert_required_fields()
-
 
 
 @allure.feature('')

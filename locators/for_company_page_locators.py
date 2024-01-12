@@ -73,6 +73,7 @@ class CompanyPageLocators():
     VAT_NUMBER_INPUT = "//section[@class='section']//label[@class='large']/p[contains(text(),'VAT NUMBER')]/following" \
                        "-sibling::div/input[@type='text']"
     VAT_NUMBER_TEXT = "193190172"
+    VAT_NUMBER_TEXT_MIN = "1931901"
 
     LEGAL_NAME_INPUT = "//label[@class='large' and p[@class='input_title' and contains(text(), 'Legal Name')]]//input[@type='text']"
 
@@ -90,7 +91,13 @@ class CompanyPageLocators():
                             " р-н, Новосёлковский с/с, д. 35, район улицы Зорный Шлях г. Марьина Горка Почтовый адрес: " \
                             "220089, Республика Беларусь, г. Минск, ул. Железнодорожная, д. 33"
 
+    MIN_COMPANY_NAME_TEXT = "Бел"
+
     ERRORE_TEXT = "//div[@class='info-banner info-banner__visible']//p[@class='info-banner_message' and @data-v-32f372a4]"
+
+    ERRORE_TEXT_MIN = "/html/body/div/div/div[2]/form/section[1]/label[5]/div/span"
+
+    ERRORE_TEXT_MIN_UNN = "/html/body/div/div/div[2]/form/section[3]/label[1]/div/span"
 
     ERRORE_TEXT_legal_name = "/html/body/div/div/div[2]/form/section[3]/label[2]/div/span"
 
@@ -106,6 +113,7 @@ class CompanyPageLocators():
     SAVE_AND_CONTINUE_BUTTON = "//button[contains(@class,'btn') and contains(.,'Save and continue')]"
 
 
+    EDIT_COMPANY = "/html/body/div/div/div[2]/form/div[1]/h1"
 
     ADD_COMPANY = "/html/body/div/div/div[2]/form/div[1]/h1"
     HR_SETTINGS = "/html/body/div/div/div[2]/form/h2[1]"
@@ -123,3 +131,12 @@ class CompanyPageLocators():
     Legal_Name_required_fields = "/html/body/div/div/div[2]/form/section[3]/label[2]/div/span"
     Legal_Address_required_fields = "/html/body/div/div/div[2]/form/section[4]/label[1]/div/span"
     Contact_Phone_required_fields = "/html/body/div/div/div[2]/form/section[4]/label[2]/div/span"
+
+    MANAGER_SELECT = "//div[@class='select-input_container']//select"
+    COMPANY_WITH_SELECT_MANAGER = "/html/body/div/div/div[2]/div[3]/div[2]/table/tbody/tr/td[2]"
+
+    SEARCH_FIELDS = "//input[@placeholder='Search']"
+    SEARCH_COMPANY = "CompanyA"
+    FOUND_COMPANY = "//td[text()='CompanyA']"
+
+    BUTTON_DELETE = "//span[text()='Удалить']"

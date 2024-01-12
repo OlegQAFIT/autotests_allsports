@@ -33,6 +33,10 @@ class Company(LoginPage, CompanyPageLocators, BasePage):
     def click_and_open_company_tab(self):
         self.hard_click(self.FOOTER_COMPANY)
 
+    @allure.step("Click delete Company ")
+    def click_delete_company(self):
+        self.hard_click(self.BUTTON_DELETE)
+
     @allure.step("Click Create Company tab")
     def click_create_company_tab(self):
         self.hard_click(self.CREATE_COMPANY)
@@ -77,6 +81,12 @@ class Company(LoginPage, CompanyPageLocators, BasePage):
         select = Select(locale_dropdown)
         select.select_by_visible_text("QA-Oleg-A")
 
+    @allure.step("Drop MANAGER")
+    def drop_manager_selection_for_select(self):
+        manager_dropdown = self.find_element(self.MANAGER_SELECT)
+        select = Select(manager_dropdown)
+        select.select_by_visible_text("Nadezhda Sadovskaya")
+
     @allure.step("Fill fields with random values")
     def fill_fields(self):
         custom_name = self.faker.word()
@@ -93,6 +103,22 @@ class Company(LoginPage, CompanyPageLocators, BasePage):
     def fill_fields_name_company(self):
         self.fill(CompanyPageLocators.COMPANY_INPUT, self.MAX_COMPANY_NAME_TEXT)
         self.fill(CompanyPageLocators.LEGAL_NAME_INPUT, self.MAX_COMPANY_NAME_TEXT)
+        self.fill(CompanyPageLocators.VAT_NUMBER_INPUT, self.VAT_NUMBER_TEXT)
+        self.fill(CompanyPageLocators.LEGAL_ADDRESS_INPUT, self.LEGAL_ADDRESS_TEXT)
+        self.fill(CompanyPageLocators.CONTACT_PHONE_INPUT, self.CONTACT_PHONE_TEXT)
+
+    @allure.step("Fill fields with max company name")
+    def fill_fields_name_min_company(self):
+        self.fill(CompanyPageLocators.COMPANY_INPUT, self.MIN_COMPANY_NAME_TEXT)
+        self.fill(CompanyPageLocators.LEGAL_NAME_INPUT, self.MIN_COMPANY_NAME_TEXT)
+        self.fill(CompanyPageLocators.VAT_NUMBER_INPUT, self.VAT_NUMBER_TEXT_MIN)
+        self.fill(CompanyPageLocators.LEGAL_ADDRESS_INPUT, self.LEGAL_ADDRESS_TEXT)
+        self.fill(CompanyPageLocators.CONTACT_PHONE_INPUT, self.CONTACT_PHONE_TEXT)
+
+    @allure.step("fill fields UNN min")
+    def fill_fields_UNN_min(self):
+        self.fill(CompanyPageLocators.COMPANY_INPUT, self.company_input_value)
+        self.fill(CompanyPageLocators.LEGAL_NAME_INPUT, self.company_input_value)
         self.fill(CompanyPageLocators.VAT_NUMBER_INPUT, self.VAT_NUMBER_TEXT)
         self.fill(CompanyPageLocators.LEGAL_ADDRESS_INPUT, self.LEGAL_ADDRESS_TEXT)
         self.fill(CompanyPageLocators.CONTACT_PHONE_INPUT, self.CONTACT_PHONE_TEXT)
@@ -118,6 +144,10 @@ class Company(LoginPage, CompanyPageLocators, BasePage):
         self.fill(CompanyPageLocators.VAT_NUMBER_INPUT, self.VAT_NUMBER_TEXT)
         self.fill(CompanyPageLocators.LEGAL_ADDRESS_INPUT, self.LEGAL_ADDRESS_TEXT)
         self.fill(CompanyPageLocators.CONTACT_PHONE_INPUT, self.CONTACT_PHONE_TEXT)
+
+    @allure.step("")
+    def search_field_company(self):
+        self.fill(CompanyPageLocators.SEARCH_FIELDS, self.SEARCH_COMPANY)
 
     @allure.step("Click save company button")
     def click_save_company(self):
@@ -147,6 +177,24 @@ class Company(LoginPage, CompanyPageLocators, BasePage):
     def assert_found_errore_text(self):
         elements_to_check = [
             (self.ERRORE_TEXT, 'Количество символов в поле Имя не может превышать 191.'),
+        ]
+
+        for element, expected_text in elements_to_check:
+            self.assert_element_text_equal(element, expected_text)
+
+    @allure.step("found errore min text")
+    def assert_found_errore_min_text(self):
+        elements_to_check = [
+            (self.ERRORE_TEXT_MIN, 'Количество символов в поле Имя должно быть не менее 4.'),
+        ]
+
+        for element, expected_text in elements_to_check:
+            self.assert_element_text_equal(element, expected_text)
+
+    @allure.step("found errore UNN min text")
+    def assert_found_errore_UNN_min_text(self):
+        elements_to_check = [
+            (self.ERRORE_TEXT_MIN_UNN, 'НДС должен содержать только цифры и состоять из девяти символов'),
         ]
 
         for element, expected_text in elements_to_check:
@@ -218,3 +266,70 @@ class Company(LoginPage, CompanyPageLocators, BasePage):
         assert not compensation_amount_input.is_enabled(), "Поле 'Compensation Amount' не задизейблено"
         assert not date_input.is_enabled(), "Поле 'Date' не задизейблено"
         assert not min_order_items_input.is_enabled(), "Поле 'Min Order Items' не задизейблено"
+
+    @allure.step("open last dropdown and edit")
+    def open_last_dropdown_and_edit(self):
+        dropdown_buttons = self.find_elements("//button[@data-v-cb972dc2]")
+
+        if dropdown_buttons:
+            last_dropdown_button = dropdown_buttons[-1]
+            last_dropdown_button.click()
+
+            edit_buttons = self.find_elements("//a[contains(text(), 'Редактировать')]")
+
+            if edit_buttons:
+                edit_buttons[-1].click()
+            else:
+                print("Кнопок 'Редактировать' не найдено.")
+        else:
+            print("Кнопок дропдауна не найдено.")
+
+    @allure.step("open and found new company")
+    def assert_open_and_found_new_company(self):
+        elements_to_check = [
+            (self.EDIT_COMPANY, 'Edit company'),
+        ]
+
+        for element, expected_text in elements_to_check:
+            self.assert_element_text_equal(element, expected_text)
+
+    @allure.step("Assert find company with select manager")
+    def assert_find_company_with_manager(self):
+        elements_to_check = [
+            (self.COMPANY_WITH_SELECT_MANAGER, 'cascsa'),
+        ]
+
+        for element, expected_text in elements_to_check:
+            self.assert_element_text_equal(element, expected_text)
+
+    @allure.step("Assert find company ")
+    def assert_find_company_search_field(self):
+        elements_to_check = [
+            (self.FOUND_COMPANY, 'CompanyA'),
+        ]
+
+        for element, expected_text in elements_to_check:
+            self.assert_element_text_equal(element, expected_text)
+
+    @allure.step("delete last company ")
+    def delete_last_company(self):
+        dropdown_buttons = self.find_elements("//button[@data-v-cb972dc2]")
+
+        if dropdown_buttons:
+            last_dropdown_button = dropdown_buttons[-1]
+            last_dropdown_button.click()
+
+            edit_buttons = self.find_elements("//a[contains(text(), ' Удалить ')]")
+
+            if edit_buttons:
+                edit_buttons[-1].click()
+            else:
+                print("Кнопок 'Редактировать' не найдено.")
+        else:
+            print("Кнопок дропдауна не найдено.")
+
+    @allure.step("Assert company not found")
+    def assert_company_not_found(self):
+        time.sleep(5)
+        assert not self.search_text_on_page(
+            self.company_input_value), f"Текст '{self.company_input_value}' найден на странице"

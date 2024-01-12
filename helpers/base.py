@@ -345,6 +345,11 @@ class BasePage:
         element = self.driver.find_element(By.XPATH, locator)
         return element.text
 
+    def find_elements(self, xpath, timeout=10):
+
+        return WebDriverWait(self.driver, timeout).until(
+            EC.presence_of_all_elements_located((By.XPATH, xpath)))
+
     # Получение текста из поля ввода
     def get_input_text(self, locator, text):
         element = self.driver.find_element(By.XPATH, locator)

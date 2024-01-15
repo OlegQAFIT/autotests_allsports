@@ -1,1 +1,2 @@
 from locators.for_company_page_locators import CompanyPageLocators
+from locators.for_price_models import PriceModelsLocators

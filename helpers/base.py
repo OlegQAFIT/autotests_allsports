@@ -111,6 +111,11 @@ class BasePage:
         element.send_keys(text)
         return text
 
+    def fills(self, locator, text):
+        element = self.wait_for_visible(locator)
+        element.send_keys(text)
+        return text
+
     def assert_text_on_page(self, text_to_find):
         try:
             WebDriverWait(self.driver, 10).until(
@@ -292,6 +297,13 @@ class BasePage:
             return True
         except ElementClickInterceptedException:
             return False
+
+    def is_element_not_clickable(driver, element):
+        try:
+            element.click()
+            return False
+        except ElementClickInterceptedException:
+            return True
 
     """
     Другие действия с элементами:

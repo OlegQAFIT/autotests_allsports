@@ -1,3 +1,6 @@
+import string
+import random
+
 import allure
 from faker import Faker
 from selenium.webdriver.common.by import By
@@ -36,6 +39,21 @@ class Company(LoginPage, CompanyPageLocators, BasePage):
     @allure.step("Click delete Company ")
     def click_delete_company(self):
         self.hard_click(self.BUTTON_DELETE)
+
+    @allure.step("Click open portal user ")
+    def click_open_portal_user(self):
+        self.hard_click(self.BUTTON_PORTAL_USER)
+
+    @allure.step("Click add portal user modal ")
+    def click_add_portal_user(self):
+        self.hard_click(self.BUTTON_ADD_LOCATOR)
+
+    @allure.step("")
+    def click_save_portal_user(self):
+        self.hard_click(self.MODAL_BUTTON_ADD_LOCATOR)
+
+
+
 
     @allure.step("Click Create Company tab")
     def click_create_company_tab(self):
@@ -333,3 +351,143 @@ class Company(LoginPage, CompanyPageLocators, BasePage):
         time.sleep(5)
         assert not self.search_text_on_page(
             self.company_input_value), f"Текст '{self.company_input_value}' найден на странице"
+
+
+
+    @allure.step("")
+    def open_page_add_portal_user(self):
+        dropdown_buttons = self.find_elements("//button[@data-v-cb972dc2]")
+
+        if dropdown_buttons:
+            last_dropdown_button = dropdown_buttons[-1]
+            last_dropdown_button.click()
+
+            portal_user_buttons = self.find_elements("//a[contains(text(), 'Portal Users')]")
+
+            if portal_user_buttons:
+                portal_user_buttons[-1].click()
+            else:
+                print("Кнопок 'Редактировать' не найдено.")
+        else:
+            print("Кнопок дропдауна не найдено.")
+
+
+    @allure.step("Assert elements on page portal user")
+    def assert_page_portal_user(self):
+        elements_to_check = [
+            (self.HEADLINE_HR_EMPLOYEES, 'HR сотрудники'),
+            (self.PHONE_LOCATOR, 'Телефон'),
+            (self.NAME_LOCATOR, 'Имя'),
+            (self.POSITION_LOCATOR, 'Позиция'),
+            (self.EMAIL_LOCATOR, 'Почта'),
+        ]
+
+        for element, expected_text in elements_to_check:
+            self.assert_element_text_equal(element, expected_text)
+
+
+    @allure.step("Assert elements on modal window portal user")
+    def assert_page_portal_user(self):
+        elements_to_check = [
+            (self.MODAL_PHONE_LOCATOR, 'Телефон:'),
+            (self.MODAL_NAME_LOCATOR, 'Имя'),
+            (self.MODAL_POSITION_LOCATOR, 'Позиция'),
+            (self.MODAL_EMAIL_LOCATOR, 'Почта'),
+            (self.MODAL_LOCAL_LOCATOR, 'Локаль'),
+            (self.MODAL_TIMEZONE_LOCATOR, 'Часовой пояс'),
+            (self.MODAL_BUTTON_CANCEL_LOCATOR, 'Отменить'),
+            (self.MODAL_BUTTON_ADD_LOCATOR, 'Добавить'),
+        ]
+
+        for element, expected_text in elements_to_check:
+            self.assert_element_text_equal(element, expected_text)
+
+    @allure.step("Assert clickable cancel buttom")
+    def assert_clickable_cancel_button(self):
+        cancel_button_locator = self.MODAL_BUTTON_CANCEL_LOCATOR
+        cancel_button_element = self.find_element(cancel_button_locator)
+        is_clickable = self.is_element_clickable(cancel_button_element)
+        assert is_clickable, f"Cancel button is not clickable"
+
+    @allure.step("Assert not clickable add buttom")
+    def assert_not_clickabel_add_buttom(self):
+        add_buttom_locator = self.MODAL_BUTTON_ADD_LOCATOR
+        add_buttom_locator = self.find_element(add_buttom_locator)
+        is_not_clickabel = self.is_element_not_clickable(add_buttom_locator)
+        assert is_not_clickabel, f"Add button is clickable"
+
+    @allure.step("")
+    def generate_new_portal_user(self):
+        remaining_digits = ''.join(random.choice(string.digits) for _ in range(7))
+        self.phone_number = f"37544{remaining_digits}"
+        self.generation_phone_number = self.phone_number
+
+        time.sleep(2)
+        self.fills(CompanyPageLocators.INPUT_MODAL_PHONE_LOCATOR, self.generation_phone_number)
+        time.sleep(5)
+        self.fills(CompanyPageLocators.INPUT_MODAL_NAME_LOCATOR, self.MODAL_NAME_TEXT)
+        self.fills(CompanyPageLocators.INPUT_MODAL_POSITION_LOCATOR, self.MODAL_POSITION_TEXT)
+
+        custom_email = self.faker.word()
+        self.created_email = f"{custom_email}@gmail.com"
+        self.email_input_value = self.created_email
+
+        self.fill(CompanyPageLocators.INPUT_MODAL_EMAIL_LOCATOR, self.email_input_value)
+
+        local_dropdown = self.find_element(self.DROP_MODAL_LOCAL_LOCATOR)
+        select = Select(local_dropdown)
+        select.select_by_visible_text("RU")
+
+        self.hard_click(self.DROP_MODAL_TIMEZONE_LOCATOR)
+        self.fills(CompanyPageLocators.INPUT_TIMEZONE, self.MODAL_TIMEZONE_TEXT)
+        self.hard_click(self.SELECT_TIMEZONE_MINSK)
+
+    @allure.step("")
+    def assert_new_portal_user(self):
+        assert self.search_text_on_page(
+            self.generation_phone_number), f"Текст '{self.generation_phone_number}' не найден на странице"
+
+
+    def add_new_portal_user_by_phone(self):
+        self.fills(CompanyPageLocators.INPUT_MODAL_PHONE_LOCATOR, self.PORTAL_USER_PHONE)
+
+    def add_new_portal_user_by_phone_1(self):
+        self.fills(CompanyPageLocators.INPUT_MODAL_PHONE_LOCATOR, self.PORTAL_USER_PHONE)
+        time.sleep(3)
+
+    def add_new_portal_user_by_email(self):
+        self.fills(CompanyPageLocators.INPUT_MODAL_EMAIL_LOCATOR, self.PORTAL_USER_EMAIL)
+
+
+    @allure.step("")
+    def assert_new_portal_user_by_phone(self):
+        time.sleep(3)
+        assert self.search_text_on_page(
+            self.PORTAL_USER_PHONE), f"Текст '{self.PORTAL_USER_PHONE}' не найден на странице"
+
+
+    @allure.step("")
+    def add_wrong_email(self):
+        self.fills(CompanyPageLocators.INPUT_MODAL_EMAIL_LOCATOR, self.WRONG_EMAIL_ERRORE)
+
+    @allure.step("")
+    def add_already_added_portal_user(self):
+        self.fills(CompanyPageLocators.INPUT_MODAL_PHONE_LOCATOR, self.ADDED_PORTAL_USER_PHONE)
+
+    @allure.step("Assert found error text")
+    def assert_found_errore_text_added_portal_user(self):
+        elements_to_check = [
+            (self.WRONG_PORTAL_USER_ERRORE_LOCATOR, 'Phone already used by another Portal User'),
+        ]
+
+        for element, expected_text in elements_to_check:
+            self.assert_element_text_equal(element, expected_text)
+
+    @allure.step("Assert found error text")
+    def assert_found_errore_text_portal_user(self):
+        elements_to_check = [
+            (self.WRONG_EMAIL_ERRORE_LOCATOR, 'Формат данных неверен'),
+        ]
+
+        for element, expected_text in elements_to_check:
+            self.assert_element_text_equal(element, expected_text)

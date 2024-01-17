@@ -140,3 +140,55 @@ class CompanyPageLocators():
     FOUND_COMPANY = "//td[text()='CompanyA']"
 
     BUTTON_DELETE = "//span[text()='Удалить']"
+    BUTTON_PORTAL_USER  = "//span[text()='Portal Users']"
+
+
+
+
+
+
+    HEADLINE_HR_EMPLOYEES = "//h1[@data-v-4cc5be50]"
+    PHONE_LOCATOR = "//thead[@data-v-4270064e]//span[text()='Телефон']"
+    NAME_LOCATOR = "//thead[@data-v-4270064e]//span[text()='Имя']"
+    POSITION_LOCATOR = "//thead[@data-v-4270064e]//span[text()='Позиция']"
+    EMAIL_LOCATOR = "//thead[@data-v-4270064e]//span[text()='Почта']"
+    SEARCH_LOCATOR = "//div[@data-v-d1b72270 and @data-v-4cc5be50 and @class='local-search']"
+    BUTTON_ADD_LOCATOR = "//button[@data-v-51670868 and @data-v-4cc5be50 and @type='button' and @class='btn btn-primary btn__auto-width']"
+
+    ADD_EMPLOYEE_LOCATOR = "//div[@class='modal_row header']//h3[@data-v-a9a67602]"
+
+    MODAL_PHONE_LOCATOR = "//span[@data-v-a9a67602 and text()='Телефон:']"
+    INPUT_MODAL_PHONE_LOCATOR = "/html/body/div/div/div[1]/form/label[1]/label/div/input"
+    MODAL_NAME_LOCATOR = "//span[@data-v-a9a67602 and contains(text(), 'Имя:')]"
+    INPUT_MODAL_NAME_LOCATOR = "/html/body/div/div/div[1]/form/label[2]/label/div/input"
+    MODAL_POSITION_LOCATOR = "//span[@data-v-a9a67602 and contains(text(), 'Позиция:')]"
+    INPUT_MODAL_POSITION_LOCATOR = "/html/body/div/div/div[1]/form/label[3]/label/div/input"
+    MODAL_EMAIL_LOCATOR = "//span[@data-v-a9a67602 and contains(text(), 'Почта:')]"
+    INPUT_MODAL_EMAIL_LOCATOR = "/html/body/div/div/div[1]/form/label[4]/label/div/input"
+    MODAL_LOCAL_LOCATOR = "//span[@data-v-a9a67602 and contains(text(), 'Локаль:')]"
+    DROP_MODAL_LOCAL_LOCATOR = "/html/body/div/div/div[1]/form/label[5]/label/div/select"
+    MODAL_TIMEZONE_LOCATOR = "//span[@data-v-a9a67602 and contains(text(), 'Часовой пояс:')]"
+    DROP_MODAL_TIMEZONE_LOCATOR = "/html/body/div/div/div[1]/form/label[6]/div/label/div"
+    INPUT_TIMEZONE = "/html/body/div/div/div[1]/form/label[6]/div/label/div/input"
+
+    MODAL_BUTTON_CANCEL_LOCATOR = "/html/body/div/div/div[1]/form/div[3]/button[1]"
+    MODAL_BUTTON_ADD_LOCATOR = "/html/body/div/div/div[1]/form/div[3]/button[2]"
+
+    MODAL_NAME_TEXT = "AQA OLEG"
+    MODAL_POSITION_TEXT = "hr"
+    MODAL_TIMEZONE_TEXT = "Europe/Minsk"
+    SELECT_TIMEZONE_MINSK = "/html/body/div/div/div[1]/form/label[6]/div/ul/li/a"
+
+    PORTAL_USER_PHONE = "375441234578"
+    PORTAL_USER_EMAIL = "forAtest@gmail.com"
+    NAME_PORTAL_USER = "Oleg for test"
+    SEARCH_PORTAL_USER = "/html/body/div/div/div[2]/div[3]/table/tbody/tr/td[4]"
+
+    WRONG_EMAIL_ERRORE = "привет"
+    WRONG_EMAIL_ERRORE_LOCATOR = "/html/body/div/div/div[1]/form/label[4]/label/div/span"
+
+    ADDED_PORTAL_USER_PHONE = "375441234578"
+    WRONG_PORTAL_USER_ERRORE_LOCATOR = "/html/body/div/div/div[1]/form/label[1]/label/div/span"
+    WRONG_PORTAL_USER_ERRORE_TEXT = "Phone already used by another Portal User"
+
+
